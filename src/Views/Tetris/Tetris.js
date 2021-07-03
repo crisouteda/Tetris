@@ -5,7 +5,6 @@ import { createStage } from "../../helpers";
 import { Stage, Display, StartButton } from "../../components";
 
 export function Tetris() {
-  console.log("en tetris", createStage());
   return (
     <div>
       <Stage stage={createStage()} />
