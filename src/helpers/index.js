@@ -1,2 +1,2 @@
 export * from "./gameHelpers";
-export * from "./tetraminos";
+export * from "./tetrominos";
