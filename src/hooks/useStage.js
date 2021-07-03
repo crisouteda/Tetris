@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { createStage } from "../helpers";
 
-export const useStage = (player, resetPlater) => {
+export const useStage = (player, resetPlayer) => {
   const [stage, setStage] = useState(createStage());
 
   useEffect(() => {
@@ -21,11 +21,15 @@ export const useStage = (player, resetPlater) => {
           }
         });
       });
+      // then check if we collided
+      if (player.collided) {
+        resetPlayer();
+      }
 
       return newStage;
     };
     setStage((prev) => updateStage(prev));
-  }, [player]);
+  }, [player, resetPlayer]);
 
   return [stage, setStage];
 };
