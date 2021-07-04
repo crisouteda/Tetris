@@ -6,7 +6,13 @@ import { checkCollision, createStage } from "../../helpers";
 import { Stage, Display, StartButton } from "../../components";
 
 // custom hooks
-import { usePlayer, useStage, useInterval, useGameStatus } from "../../hooks";
+import {
+  usePlayer,
+  useStage,
+  useInterval,
+  useGameStatus,
+  useBestScore,
+} from "../../hooks";
 
 export function Tetris() {
   const [dropTime, setDropTime] = useState(null);
@@ -15,6 +21,7 @@ export function Tetris() {
   const [stage, setStage, rowsCleared] = useStage(player, resetPlayer);
   const [score, setScore, rows, setRows, level, setLevel] =
     useGameStatus(rowsCleared);
+  const [bestScore, setBestScore, saveBestScore] = useBestScore();
 
   const movePlayer = (dir) => {
     if (!checkCollision(player, stage, { x: dir, y: 0 })) {
@@ -35,6 +42,9 @@ export function Tetris() {
   };
 
   const drop = () => {
+    if (score > bestScore) {
+      setBestScore(score);
+    }
     // Increate level whrn player has cleared 10 rows
     if (rows > (level + 1) * 10) {
       setLevel((prev) => prev + 1);
@@ -46,7 +56,7 @@ export function Tetris() {
     } else {
       // Game Over
       if (player.pos.y < 1) {
-        console.log("GAME OVER!!");
+        saveBestScore();
         setGameOver(true);
         setDropTime(null);
       }
@@ -61,6 +71,7 @@ export function Tetris() {
       }
     }
   };
+
   const dropPlayer = () => {
     setDropTime(null);
     drop();
@@ -101,6 +112,7 @@ export function Tetris() {
               <Display text={`Score: ${score}`} />
               <Display text={`Rows: ${rows}`} />
               <Display text={`Level: ${level}`} />
+              <Display text={`Best Score: ${bestScore}`} />
             </div>
           )}
           <StartButton callback={startGame} />
