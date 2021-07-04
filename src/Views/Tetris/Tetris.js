@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import useSound from "use-sound";
 import { StyledTetrisWrapper, StyledTetris } from "./Style";
 
 import { checkCollision, createStage } from "../../helpers";
@@ -18,11 +19,19 @@ export function Tetris() {
   const [dropTime, setDropTime] = useState(null);
   const [gameOver, setGameOver] = useState(false);
   const [newBestScore, setNewBestScore] = useState(false);
+  const [audio, setAudio] = useState("");
+  const [play] = useSound(audio);
   const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer();
   const [stage, setStage, rowsCleared] = useStage(player, resetPlayer);
   const [score, setScore, rows, setRows, level, setLevel] =
     useGameStatus(rowsCleared);
   const [bestScore, setBestScore, saveBestScore] = useBestScore();
+  //https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Best_practices
+  //solve autoplay-audio problem
+  useEffect(() => {
+    console.log(audio);
+    play();
+  }, [audio]);
 
   const movePlayer = (dir) => {
     if (!checkCollision(player, stage, { x: dir, y: 0 })) {
@@ -51,6 +60,7 @@ export function Tetris() {
     // Increate level whrn player has cleared 10 rows
     if (rows > (level + 1) * 10) {
       setLevel((prev) => prev + 1);
+      setAudio("../../assets/levelUp.mp3");
       // Also increase speed
       setDropTime(1000 / (level + 1) + 200);
     }
@@ -62,6 +72,7 @@ export function Tetris() {
         saveBestScore();
         setGameOver(true);
         setDropTime(null);
+        setAudio("../../assets/gameOver.mp3");
       }
       updatePlayerPos({ x: 0, y: 0, collided: true });
     }
