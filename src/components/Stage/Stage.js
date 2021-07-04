@@ -3,7 +3,6 @@ import { StyledStage } from "./Style";
 import { Cell } from "../Cell";
 
 export function Stage({ stage }) {
-  console.log("stage", stage);
   return (
     <StyledStage width={stage[0].length} height={stage.length}>
       {stage.map((row) =>
