@@ -37,6 +37,7 @@ export function Tetris() {
     setDropTime(1000);
     resetPlayer();
     setGameOver(false);
+    setBestScore(false);
     setScore(0);
     setRows(0);
     setLevel(0);
