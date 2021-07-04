@@ -112,9 +112,9 @@ export function Tetris() {
               <Display text={`Score: ${score}`} />
               <Display text={`Rows: ${rows}`} />
               <Display text={`Level: ${level}`} />
-              <Display text={`Best Score: ${bestScore}`} />
             </div>
           )}
+          <Display text={`Best Score: ${bestScore}`} />
           <StartButton callback={startGame} />
         </aside>
       </StyledTetris>
