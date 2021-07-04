@@ -17,6 +17,7 @@ import {
 export function Tetris() {
   const [dropTime, setDropTime] = useState(null);
   const [gameOver, setGameOver] = useState(false);
+  const [newBestScore, setNewBestScore] = useState(false);
   const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer();
   const [stage, setStage, rowsCleared] = useStage(player, resetPlayer);
   const [score, setScore, rows, setRows, level, setLevel] =
@@ -44,6 +45,7 @@ export function Tetris() {
   const drop = () => {
     if (score > bestScore) {
       setBestScore(score);
+      setNewBestScore(true);
     }
     // Increate level whrn player has cleared 10 rows
     if (rows > (level + 1) * 10) {
@@ -114,7 +116,10 @@ export function Tetris() {
               <Display text={`Level: ${level}`} />
             </div>
           )}
-          <Display text={`Best Score: ${bestScore}`} />
+          <Display
+            text={`Best Score: ${bestScore}`}
+            newBestScore={newBestScore}
+          />
           <StartButton callback={startGame} />
         </aside>
       </StyledTetris>
