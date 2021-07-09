@@ -1,1 +1,2 @@
-export * from "./Tetris"
+export * from "./Tetris";
+export * from "./Snake";
