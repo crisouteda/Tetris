@@ -25,8 +25,8 @@ const bestScoreAudio = new Audio(
   "https://audio-tecris.s3.eu-west-1.amazonaws.com/bestScore.mp3"
 );
 
-const awesomeAudio = new Audio(
-  "https://audio-tecris.s3.eu-west-1.amazonaws.com/awesome.mp3"
+const wellDoneAudio = new Audio(
+  "https://audio-tecris.s3.eu-west-1.amazonaws.com/wellDone.mp3"
 );
 
 export function Tetris() {
@@ -48,9 +48,13 @@ export function Tetris() {
   useEffect(() => {
     if (rowsCleared >= 4) {
       console.log(rowsCleared);
-      setAudio(awesomeAudio);
+      setAudio(wellDoneAudio);
     }
   }, [rowsCleared]);
+
+  useEffect(() => {
+    setAudio(bestScoreAudio);
+  }, [newBestScore]);
 
   const movePlayer = (dir) => {
     if (!checkCollision(player, stage, { x: dir, y: 0 })) {
@@ -75,7 +79,6 @@ export function Tetris() {
     if (score > bestScore) {
       setBestScore(score);
       setNewBestScore(true);
-      setAudio(bestScoreAudio);
     }
     // Increate level whrn player has cleared 10 rows
     if (rows > (level + 1) * 10) {
