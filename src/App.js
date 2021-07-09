@@ -1,11 +1,18 @@
 import React from "react";
-import { Tetris } from "./Views";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { StyledWrapper } from "./Style";
+import { Tetris, Snake } from "./Views";
 
 function App() {
   return (
-    <div className="App">
-      <Tetris />
-    </div>
+    <Router>
+      <StyledWrapper>
+        <Switch>
+          <Route path="/" exact component={Tetris} />
+          <Route path="/snake" exact component={Snake} />
+        </Switch>
+      </StyledWrapper>
+    </Router>
   );
 }
 
