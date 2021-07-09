@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyledTetrisWrapper, StyledTetris } from "./Style";
+import { StyledTetris } from "./Style";
 
 import { checkCollision, createStage } from "../../helpers";
 // components
@@ -133,31 +133,29 @@ export function Tetris() {
   }, dropTime);
 
   return (
-    <StyledTetrisWrapper
+    <StyledTetris
       role="button"
       tabIndex="0"
       onKeyDown={(e) => move(e)}
       onKeyUp={keyUp}
     >
-      <StyledTetris>
-        <Stage stage={stage} />
-        <aside>
-          {gameOver ? (
-            <Display gameOver={gameOver} text="Game Over" />
-          ) : (
-            <div>
-              <Display text={`Score: ${score}`} />
-              <Display text={`Rows: ${rows}`} />
-              <Display text={`Level: ${level}`} />
-            </div>
-          )}
-          <Display
-            text={`Best Score: ${bestScore}`}
-            newBestScore={newBestScore}
-          />
-          <StartButton callback={startGame} />
-        </aside>
-      </StyledTetris>
-    </StyledTetrisWrapper>
+      <Stage stage={stage} />
+      <aside>
+        {gameOver ? (
+          <Display gameOver={gameOver} text="Game Over" />
+        ) : (
+          <div>
+            <Display text={`Score: ${score}`} />
+            <Display text={`Rows: ${rows}`} />
+            <Display text={`Level: ${level}`} />
+          </div>
+        )}
+        <Display
+          text={`Best Score: ${bestScore}`}
+          newBestScore={newBestScore}
+        />
+        <StartButton callback={startGame} />
+      </aside>
+    </StyledTetris>
   );
 }
